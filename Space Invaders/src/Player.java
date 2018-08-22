@@ -14,6 +14,7 @@ public class Player extends GameObject{
     //keeps track of whether the player is moving to the left
     private boolean movingLeft = false;
     private boolean movingRight = false;
+    private int shootCountdown = 0;
 
 	public Player(int x, int y, int w, int h) {
         super(x, y, w, h);
@@ -41,10 +42,12 @@ public class Player extends GameObject{
 			movingRight = false;
 		}
         
+        //If the player is movingRight, then increase xPos
 		if(movingRight) {
 			getBounds().x++;
 		}
 		
+		//If the player is at the right edge, don't allow moving right
 		if(getBounds().x == 755) {
 			movingRight = false;
 		}
