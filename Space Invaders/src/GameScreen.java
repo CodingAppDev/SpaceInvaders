@@ -60,7 +60,6 @@ public class GameScreen extends Screen
         	Laser current = laserList.get(i);
         		current.update();
         }
-        
         player.update();
               
 	}
@@ -78,6 +77,13 @@ public class GameScreen extends Screen
 			state.switchToWelcomeScreen();
 		  else if(code == KeyEvent.VK_RIGHT)
 	            player.setMovingRight(true);
+		
+		if(code == KeyEvent.VK_SPACE) {
+			Laser currentShot = player.shoot();
+			if(!(currentShot == null)){
+				laserList.add(currentShot);
+			}
+		}
 	}	
 			
 	

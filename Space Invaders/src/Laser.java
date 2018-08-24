@@ -7,17 +7,18 @@ public class Laser extends GameObject {
 	
 	 private Image image = ImageLoader.loadCompatibleImage("sprites/alienStraightLaser2.png");
 	 private int updateCounter = 0;
+	 private int laserDirection;
 	 
 	public Laser(int x, int y, int w, int h, int direction) {
         super(x, y, w, h);
-        direction = 1;
+        laserDirection = direction;
 	}
 	
 	public void update() {
 		updateCounter++;
 		
 		if(updateCounter % 10 == 0)
-            this.getBounds().y += 10;
+            this.getBounds().y += 10*laserDirection;
 		
 		
 		

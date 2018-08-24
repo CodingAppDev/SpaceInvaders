@@ -52,6 +52,11 @@ public class Player extends GameObject{
 			movingRight = false;
 		}
 		
+		//Decreases shoot variable
+		if(shootCountdown >= 0) {
+			shootCountdown--;
+		}
+		
 	}
 			
     
@@ -73,6 +78,22 @@ public class Player extends GameObject{
                     (int)getBounds().width,
                     (int)getBounds().height,
                     null);
+	}
+	
+	public Laser shoot() {
+		int xPos = (int)this.getBounds().x;
+		int yPos = (int)this.getBounds().y;
+		int width = (int)this.getBounds().width;
+		int height = (int)this.getBounds().height;
+		System.out.println(shootCountdown);
+		if(shootCountdown <= 0) {
+			shootCountdown = 80;
+			Laser laser = new Laser(xPos+10, yPos+10, width, height, -1);
+			System.out.println("Worked");
+			return laser;
+		}
+
+		return null;
 	}
 
 

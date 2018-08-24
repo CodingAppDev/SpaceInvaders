@@ -7,10 +7,12 @@ import java.awt.geom.*;
 
 public class Alien extends GameObject {
 
-	private Image image = ImageLoader.loadCompatibleImage("sprites/alienA1.png");
+	private Image image = ImageLoader.loadCompatibleImage("sprites/alienB1.png");
+	private Image imageTwo = ImageLoader.loadCompatibleImage("sprites/alienB2.png");
 	private int updateCounter = 0;
 	private int laserCountdown = 240;
 	private boolean positionCounter = false;
+	private int currentImage = 1;
 
 	public Alien(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -39,15 +41,27 @@ public class Alien extends GameObject {
 				getBounds().x += getBounds().width/2;
 			}
 		}
+		
+		//Changes value of currentImage to draw different image
+		if(updateCounter % 05 == 0) {
+			if(currentImage == 1) {
+				currentImage = 0;
+		
+				
+			}
+			if(currentImage == 0) {
+				currentImage = 1;
+			}
+		}
+		
 		//Fires the laser every 3 seconds
-
 		if(laserCountdown >= 0) {
 			laserCountdown--;
 		}
 
 
 	}
-
+		//Class that allows the alien to shoot a laser
 	public Laser shoot() {
 		int xPos = (int)this.getBounds().x;
 		int yPos = (int)this.getBounds().y;
@@ -66,14 +80,26 @@ public class Alien extends GameObject {
 
 
 	//draw the image represented by the alien
+	//Changes what is rendered depending on value of currentImage
 	public void render(Graphics2D g) {
-
+		if(currentImage == 1){
 		g.drawImage(image,
 				(int)getBounds().x,
 				(int)getBounds().y,
 				(int)getBounds().width,
 				(int)getBounds().height,
 				null);
+		}
+		
+		if(currentImage == 0){
+			g.drawImage(imageTwo,
+					(int)getBounds().x,
+					(int)getBounds().y,
+					(int)getBounds().width,
+					(int)getBounds().height,
+					null);
+			}
 
 	}
+	
 }
