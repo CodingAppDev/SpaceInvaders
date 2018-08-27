@@ -12,6 +12,7 @@ public class GameScreen extends Screen
     //variables that represent the different GameObjects in the game
     private ArrayList<Alien> aliens;
     private Player player;
+    private int gameOverStatus;
     
     //this class inherits the following final variables (so you can't change them!)
     //
@@ -56,12 +57,15 @@ public class GameScreen extends Screen
             if(!(laser == null)) {
             	laserList.add(laser);
             }
+            
         }
           
             for(int i = 0; i < laserList.size(); i++) {
             	Laser current = laserList.get(i);
             		current.update();
             }
+            
+            int alienSize = aliens.size();
             
             if(laserList.size() != 0) {
             	for(int j = laserList.size()-1; j >= 0; j--) {
@@ -72,14 +76,19 @@ public class GameScreen extends Screen
             			
             					if(alien.intersects(current) && current.getDirection() == -1){
             						aliens.remove(alien);
-            						laserList.remove(current);            					
+            						laserList.remove(current);  
+            						gameOverStatus+= 1;
+            						
+            						//if(gameOverStatus == alienSize) {
+            						//	gameOver();
+            						//}
             					}            			
             			}
             	}
             }
-            
+
         player.update();
-              
+        
 	}
 	
     //handles key press events
