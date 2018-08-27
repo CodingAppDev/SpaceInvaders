@@ -29,7 +29,9 @@ public class GameScreen extends Screen
         laserList = new ArrayList<Laser>();
         
         player = new Player(width/2 - 23, height - 24, 45, 24);
-        aliens.add(new Alien(20, 100, 37, 25));
+        aliens.add(new Alien(0, 100, 37, 25));
+        aliens.add(new Alien(25, 70, 37, 25));
+        aliens.add(new Alien(50, 30, 37, 25));
     }
 	
     //render all the game objects in the game
@@ -54,12 +56,28 @@ public class GameScreen extends Screen
             if(!(laser == null)) {
             	laserList.add(laser);
             }
-        }    
-                 
-        for(int i = 0; i < laserList.size(); i++) {
-        	Laser current = laserList.get(i);
-        		current.update();
         }
+          
+            for(int i = 0; i < laserList.size(); i++) {
+            	Laser current = laserList.get(i);
+            		current.update();
+            }
+            
+            if(laserList.size() != 0) {
+            	for(int j = laserList.size()-1; j >= 0; j--) {
+            		Laser current = laserList.get(j);
+            	
+            			for(int i = 0; i < aliens.size(); i++) {
+            				Alien alien = aliens.get(i);
+            			
+            					if(alien.intersects(current) && current.getDirection() == -1){
+            						aliens.remove(alien);
+            						laserList.remove(current);            					
+            					}            			
+            			}
+            	}
+            }
+            
         player.update();
               
 	}

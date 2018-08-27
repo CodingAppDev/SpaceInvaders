@@ -7,6 +7,8 @@ public class Laser extends GameObject {
 	
 	 private Image image = ImageLoader.loadCompatibleImage("sprites/alienStraightLaser2.png");
 	 private int updateCounter = 0;
+	 
+	 //Keeps track of the direction of lasers fired by aliens and player
 	 private int laserDirection;
 	 
 	public Laser(int x, int y, int w, int h, int direction) {
@@ -32,6 +34,10 @@ public class Laser extends GameObject {
                     (int)getBounds().width,
                     (int)getBounds().height,
                     null);       
+	}
+	
+	public int getDirection() {
+		return laserDirection;
 	}
 	
 }
