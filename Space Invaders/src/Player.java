@@ -24,31 +24,31 @@ public class Player extends GameObject{
 	public void update() {
 		
 		//Checks before moving left to determine if the player is at the edge
-        if(getBounds().x == 0) {
+        if(getBounds().x <= 0) {
 			movingLeft = false;
 		}
         
         //if we're moving to the left, decrease the player's boundary x by 1		
         if(movingLeft)
-            getBounds().x--;
+            getBounds().x -= 5;
         
         //Checks after moving left to determine if player is at edge
-        if(getBounds().x == 0) {
+        if(getBounds().x <= 0) {
 			movingLeft = false;
 		}
         
       //Checks before moving right to determine if player is at edge
-        if(getBounds().x == 755) {
+        if(getBounds().x >= 755) {
 			movingRight = false;
 		}
         
         //If the player is movingRight, then increase xPos
 		if(movingRight) {
-			getBounds().x++;
+			getBounds().x += 5;
 		}
 		
 		//If the player is at the right edge, don't allow moving right
-		if(getBounds().x == 755) {
+		if(getBounds().x >= 755) {
 			movingRight = false;
 		}
 		

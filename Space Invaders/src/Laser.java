@@ -19,7 +19,7 @@ public class Laser extends GameObject {
 	public void update() {
 		updateCounter++;
 		
-		if(updateCounter % 10 == 0)
+		if(updateCounter % 01 == 0)
             this.getBounds().y += 10*laserDirection;
 		
 		
@@ -31,8 +31,8 @@ public class Laser extends GameObject {
 		g.drawImage(image,
                     (int)getBounds().x,
                     (int)getBounds().y,
-                    (int)getBounds().width,
-                    (int)getBounds().height,
+                    (int)getBounds().width-30,
+                    (int)getBounds().height-10,
                     null);       
 	}
 	

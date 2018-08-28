@@ -31,8 +31,14 @@ public class GameScreen extends Screen
         
         player = new Player(width/2 - 23, height - 24, 45, 24);
         aliens.add(new Alien(0, 100, 37, 25));
-        aliens.add(new Alien(25, 70, 37, 25));
+        aliens.add(new Alien(0, 70, 37, 25));
+        aliens.add(new Alien(0, 30, 37, 25));
+        aliens.add(new Alien(50, 100, 37, 25));
+        aliens.add(new Alien(50, 70, 37, 25));
         aliens.add(new Alien(50, 30, 37, 25));
+        aliens.add(new Alien(100, 100, 37, 25));
+        aliens.add(new Alien(100, 70, 37, 25));
+        aliens.add(new Alien(100, 30, 37, 25));
     }
 	
     //render all the game objects in the game
@@ -65,7 +71,6 @@ public class GameScreen extends Screen
             		current.update();
             }
             
-            int alienSize = aliens.size();
             
             if(laserList.size() != 0) {
             	for(int j = laserList.size()-1; j >= 0; j--) {
@@ -77,12 +82,19 @@ public class GameScreen extends Screen
             					if(alien.intersects(current) && current.getDirection() == -1){
             						aliens.remove(alien);
             						laserList.remove(current);  
-            						gameOverStatus+= 1;
+            						gameOverStatus++;
             						
-            						//if(gameOverStatus == alienSize) {
-            						//	gameOver();
-            						//}
-            					}            			
+            					}
+            					
+            					if(player.intersects(current) && current.getDirection() == 1){
+            						gameOver();
+            						return;
+            					}
+            					
+            					if(aliens.size() == 0) {
+        							gameWin();
+        							return;
+        						}
             			}
             	}
             }
@@ -134,6 +146,15 @@ public class GameScreen extends Screen
         
         //switch to the game over screen
         state.switchToGameOverScreen();
+    }
+    
+    //Should be called when the player defeats all the aliens
+    public void gameWin() {
+    	//sets up the next game
+    	initGame();
+    	
+    	//switches to the game win screen
+    	state.switchToGameWinScreen();
     }
 	
     //implement these methods if your player can use the mouse
