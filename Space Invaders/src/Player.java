@@ -15,6 +15,7 @@ public class Player extends GameObject{
     private boolean movingLeft = false;
     private boolean movingRight = false;
     private int shootCountdown = 0;
+    private int lives = 3;
 
 	public Player(int x, int y, int w, int h) {
         super(x, y, w, h);
@@ -94,6 +95,9 @@ public class Player extends GameObject{
 		}
 
 		return null;
+	}
+	
+	public void loseLife() {
 	}
 
 

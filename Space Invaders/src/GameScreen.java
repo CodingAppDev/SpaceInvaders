@@ -12,7 +12,8 @@ public class GameScreen extends Screen
     //variables that represent the different GameObjects in the game
     private ArrayList<Alien> aliens;
     private Player player;
-    private int gameOverStatus;
+    private int score;
+   
     
     //this class inherits the following final variables (so you can't change them!)
     //
@@ -39,18 +40,27 @@ public class GameScreen extends Screen
         aliens.add(new Alien(100, 100, 37, 25));
         aliens.add(new Alien(100, 70, 37, 25));
         aliens.add(new Alien(100, 30, 37, 25));
+        score = 0;
     }
 	
     //render all the game objects in the game
 	public void render(Graphics2D g) {
 		
+	//Renders each alien in the alien array	
 		for(Alien a: aliens)
             a.render(g);
 		
+	//Renders each laser object	in the laser array
         for(Laser l: laserList)
             l.render(g);
         
+    //Renders the player object
         player.render(g);
+        
+        g.setFont(new Font("Geneva", Font.BOLD, 20));
+		g.setColor(Color.GREEN);
+		g.drawString("Current score:" + score, 640, 25);
+	
 	}		
 	
 	
@@ -82,7 +92,7 @@ public class GameScreen extends Screen
             					if(alien.intersects(current) && current.getDirection() == -1){
             						aliens.remove(alien);
             						laserList.remove(current);  
-            						gameOverStatus++;
+            						score += alien.getPoints();
             						
             					}
             					
@@ -149,7 +159,7 @@ public class GameScreen extends Screen
     }
     
     //Should be called when the player defeats all the aliens
-    public void gameWin() {
+   public void gameWin() {
     	//sets up the next game
     	initGame();
     	

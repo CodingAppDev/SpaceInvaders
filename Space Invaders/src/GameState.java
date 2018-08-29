@@ -9,6 +9,7 @@ public class GameState
 		screens.add(new WelcomeScreen(this, width, height));
 		screens.add(new GameScreen(this, width, height));
         screens.add(new GameOverScreen(this, width, height));
+        screens.add(new GameWinScreen(this, width, height));
 	}
 	
 	public Screen currentActiveScreen() {
@@ -30,6 +31,12 @@ public class GameState
     public void switchToGameOverScreen() {
         indexOfCurrentScreen = 2;
     }
+    
+    //Sets the value of CurrentScreen to the third value in the array, 
+    //which is the GameWinScreen scenario
+    public void switchToGameWinScreen() {
+    	indexOfCurrentScreen = 3;
+    }
 	
 	public boolean isWelcomeScreen() {
 		return indexOfCurrentScreen == 0;
@@ -42,5 +49,11 @@ public class GameState
     public boolean isGameOverScreen() {
         return indexOfCurrentScreen == 2;
     }
+    
+    //Returns the index of CurrentScreen so the correct screen is accessed
+    public boolean isWinScreen() {
+    	return indexOfCurrentScreen == 3;
+    }
+   
 	
 }

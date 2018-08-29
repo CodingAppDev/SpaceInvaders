@@ -15,7 +15,8 @@ public class GameWinScreen extends Screen
     
 	public void render(Graphics2D g) {
         g.setColor(Color.WHITE);
-        g.drawString("Congratulations!", 50, 50);
+        g.setFont(new Font("Geneva", Font.BOLD, 30));
+        g.drawString("Congratulations! You win", 50, 50);
 	}
 	
 	public void update() {

@@ -15,6 +15,7 @@ public class GameOverScreen extends Screen
     
 	public void render(Graphics2D g) {
         g.setColor(Color.WHITE);
+        g.setFont(new Font("Geneva", Font.BOLD, 30));
         g.drawString("Game Over", 50, 50);
 	}
 	

@@ -102,4 +102,8 @@ public class Alien extends GameObject {
 
 	}
 	
+	public int getPoints() {
+		return 10;
+	}
+	
 }
