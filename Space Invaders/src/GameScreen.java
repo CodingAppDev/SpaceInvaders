@@ -13,7 +13,8 @@ public class GameScreen extends Screen
     private ArrayList<Alien> aliens;
     private Player player;
     private int score;
-   
+    private int currentHighScore;
+    private int nextLevel = 2;
     
     //this class inherits the following final variables (so you can't change them!)
     //
@@ -30,18 +31,69 @@ public class GameScreen extends Screen
         aliens = new ArrayList<Alien>();
         laserList = new ArrayList<Laser>();
         
-        player = new Player(width/2 - 23, height - 24, 45, 24);
-        aliens.add(new Alien(0, 100, 37, 25));
-        aliens.add(new Alien(0, 70, 37, 25));
-        aliens.add(new Alien(0, 30, 37, 25));
-        aliens.add(new Alien(50, 100, 37, 25));
-        aliens.add(new Alien(50, 70, 37, 25));
-        aliens.add(new Alien(50, 30, 37, 25));
-        aliens.add(new Alien(100, 100, 37, 25));
-        aliens.add(new Alien(100, 70, 37, 25));
-        aliens.add(new Alien(100, 30, 37, 25));
-        score = 0;
+        //On the first level, these aliens are created
+        if(nextLevel == 2){
+        	player = new Player(width/2 - 23, height - 24, 45, 24);
+        	aliens.add(new Alien(0, 100, 37, 25));
+        	aliens.add(new Alien(0, 70, 37, 25));
+        	aliens.add(new Alien(0, 30, 37, 25));
+        	aliens.add(new Alien(50, 100, 37, 25));
+        	aliens.add(new Alien(50, 70, 37, 25));
+        	aliens.add(new Alien(50, 30, 37, 25));
+        	aliens.add(new Alien(100, 100, 37, 25));
+        	aliens.add(new Alien(100, 70, 37, 25));
+        	aliens.add(new Alien(100, 30, 37, 25));
+        	score = 0;
+        }
+        //Second level
+        if(nextLevel == 3) {
+        	aliens.add(new Alien(0, 300, 37, 25));
+        	aliens.add(new Alien(0, 370, 37, 25));
+        	aliens.add(new Alien(0, 330, 37, 25));
+        	aliens.add(new Alien(50, 300, 37, 25));
+        	aliens.add(new Alien(50, 370, 37, 25));
+        	aliens.add(new Alien(50, 330, 37, 25));
+        	aliens.add(new Alien(100, 300, 37, 25));
+        	aliens.add(new Alien(100, 370, 37, 25));
+        	aliens.add(new Alien(100, 330, 37, 25));
+        }
+        //Fourth level
+        if(nextLevel == 4) {
+        	aliens.add(new Alien(0, 300, 37, 25));
+        	aliens.add(new Alien(0, 370, 37, 25));
+        	aliens.add(new Alien(0, 330, 37, 25));
+        	aliens.add(new Alien(50, 300, 37, 25));
+        	aliens.add(new Alien(50, 370, 37, 25));
+        	aliens.add(new Alien(50, 330, 37, 25));
+        	aliens.add(new Alien(100, 300, 37, 25));
+        	aliens.add(new Alien(100, 370, 37, 25));
+        	aliens.add(new Alien(100, 330, 37, 25));
+        	aliens.add(new Alien(0, 100, 37, 25));
+        	aliens.add(new Alien(0, 70, 37, 25));
+        	aliens.add(new Alien(0, 30, 37, 25));
+        	aliens.add(new Alien(50, 100, 37, 25));
+        	aliens.add(new Alien(50, 70, 37, 25));
+        	aliens.add(new Alien(50, 30, 37, 25));
+        	aliens.add(new Alien(100, 100, 37, 25));
+        	aliens.add(new Alien(100, 70, 37, 25));
+        	aliens.add(new Alien(100, 30, 37, 25));
+        }
+        
+        //Boss level  
+    	if(nextLevel == 5) {
+    		aliens.add(new Alien(0, 100, 37, 25));
+        	aliens.add(new Alien(0, 70, 37, 25));
+        	aliens.add(new Alien(0, 30, 37, 25));
+        	aliens.add(new Alien(50, 100, 37, 25));
+        	aliens.add(new Alien(50, 70, 37, 25));
+        	aliens.add(new Alien(50, 30, 37, 25));
+        	aliens.add(new Alien(100, 100, 37, 25));
+        	aliens.add(new Alien(100, 70, 37, 25));
+        	aliens.add(new Alien(100, 30, 37, 25));
+        	aliens.add(new Alien(0, 300, 100, 100));
+    	}
     }
+        
 	
     //render all the game objects in the game
 	public void render(Graphics2D g) {
@@ -56,10 +108,14 @@ public class GameScreen extends Screen
         
     //Renders the player object
         player.render(g);
-        
+    
+    //Renders the current score and session high score
         g.setFont(new Font("Geneva", Font.BOLD, 20));
 		g.setColor(Color.GREEN);
 		g.drawString("Current score:" + score, 640, 25);
+		
+		g.setFont(new Font("Geneva", Font.BOLD, 12));
+		g.drawString("Session high score:" + currentHighScore, 650, 50);
 	
 	}		
 	
@@ -81,7 +137,7 @@ public class GameScreen extends Screen
             		current.update();
             }
             
-            
+            //Runs through the possible intersections between player and alien lasers
             if(laserList.size() != 0) {
             	for(int j = laserList.size()-1; j >= 0; j--) {
             		Laser current = laserList.get(j);
@@ -89,21 +145,37 @@ public class GameScreen extends Screen
             			for(int i = 0; i < aliens.size(); i++) {
             				Alien alien = aliens.get(i);
             			
+            					//Alien gets hit by a player laser
             					if(alien.intersects(current) && current.getDirection() == -1){
             						aliens.remove(alien);
-            						laserList.remove(current);  
+            						laserList.remove(current);
+            						
             						score += alien.getPoints();
+            						if(score >= currentHighScore) {
+            							currentHighScore = score;            							
+            						}
             						
             					}
             					
+            					//If the player gets hit by an alien laser, go to game over screen 
+            					//and re-initialize the game to start over from level 1
             					if(player.intersects(current) && current.getDirection() == 1){
             						gameOver();
+            						initGame();
             						return;
             					}
             					
+            					//If no more aliens remain, show game win screen and go to next level
             					if(aliens.size() == 0) {
+            						if(nextLevel == 5) {
+            							state.switchToWelcomeScreen();
+            						}
+            						
+            						nextLevel++;
         							gameWin();
+        							initGame();
         							return;
+        							   							
         						}
             			}
             	}
